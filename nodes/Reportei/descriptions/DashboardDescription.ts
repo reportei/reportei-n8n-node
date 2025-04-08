@@ -1,10 +1,5 @@
 import { INodeProperties } from 'n8n-workflow';
 
-/**
- * --------------------------------------------------------
- *  Dashboard Operations
- * --------------------------------------------------------
- */
 export const dashboardOperations: INodeProperties[] = [
 	{
 		displayName: 'Operation',
@@ -18,8 +13,6 @@ export const dashboardOperations: INodeProperties[] = [
 				description: 'Create a new dashboard in Reportei',
 				action: 'Create a dashboard',
 			},
-			// Caso no futuro você adicione outras operações (ex: update, list),
-			// basta acrescentar aqui.
 		],
 		default: 'create',
 		displayOptions: {
@@ -30,13 +23,6 @@ export const dashboardOperations: INodeProperties[] = [
 	},
 ];
 
-/**
- * --------------------------------------------------------
- *  Dashboard Fields
- * --------------------------------------------------------
- * Estes campos são exibidos quando resource = 'dashboard'
- * e operation = 'create'.
- */
 export const dashboardFields: INodeProperties[] = [
 	{
 		displayName: 'Project Name or ID',

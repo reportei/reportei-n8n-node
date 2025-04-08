@@ -8,12 +8,10 @@ import {
 	IDataObject,
 } from 'n8n-workflow';
 
-// Importar as descrições de cada recurso
 import { reportOperations, reportFields } from './descriptions/ReportDescription';
 import { dashboardOperations, dashboardFields } from './descriptions/DashboardDescription';
 import { timelineOperations, timelineFields } from './descriptions/TimelineDescription';
 
-// Importar a função genérica para requisições
 import { reporteiApiRequest } from './GenericFunctions';
 
 export class Reportei implements INodeType {
@@ -37,7 +35,6 @@ export class Reportei implements INodeType {
 			},
 		],
 		properties: [
-			// Escolha de recurso (Report, Dashboard, Timeline)
 			{
 				displayName: 'Resource',
 				name: 'resource',
@@ -53,7 +50,6 @@ export class Reportei implements INodeType {
 				description: 'Choose which resource you want to operate on',
 			},
 
-			// Espalhamos as descrições de cada recurso
 			...reportOperations,
 			...reportFields,
 
@@ -67,9 +63,6 @@ export class Reportei implements INodeType {
 
 	methods = {
 		loadOptions: {
-			/**
-			 * Carrega até 1000 clientes, exibindo-os como opções
-			 */
 			async getClients(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
 				const returnData: INodePropertyOptions[] = [];
 
@@ -92,9 +85,6 @@ export class Reportei implements INodeType {
 				return returnData;
 			},
 
-			/**
-			 * Lista as integrações de um cliente específico
-			 */
 			async getIntegrations(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
 				const returnData: INodePropertyOptions[] = [];
 				const clientId = this.getCurrentNodeParameter('projectId') as string;
@@ -118,9 +108,6 @@ export class Reportei implements INodeType {
 				return returnData;
 			},
 
-			/**
-			 * Lista os relatórios de um cliente específico
-			 */
 			async getReports(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
 				const returnData: INodePropertyOptions[] = [];
 				const clientId = this.getCurrentNodeParameter('projectId') as string;
@@ -146,10 +133,6 @@ export class Reportei implements INodeType {
 		},
 	};
 
-	/**
-	 * A lógica principal, que decide qual resource/operation
-	 * e faz a requisição correspondente usando reporteiApiRequest.
-	 */
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
 		const items = this.getInputData();
 		const returnData: INodeExecutionData[] = [];
@@ -161,9 +144,6 @@ export class Reportei implements INodeType {
 
 				let responseData: IDataObject | undefined;
 
-				// ---------------------------------------
-				// Report
-				// ---------------------------------------
 				if (resource === 'report') {
 					if (operation === 'create') {
 						const projectId = this.getNodeParameter('projectId', i) as string;
@@ -195,9 +175,6 @@ export class Reportei implements INodeType {
 					}
 				}
 
-				// ---------------------------------------
-				// Dashboard
-				// ---------------------------------------
 				if (resource === 'dashboard') {
 					if (operation === 'create') {
 						const projectId = this.getNodeParameter('projectId', i) as string;
@@ -229,9 +206,6 @@ export class Reportei implements INodeType {
 					}
 				}
 
-				// ---------------------------------------
-				// Timeline
-				// ---------------------------------------
 				if (resource === 'timeline') {
 					if (operation === 'create') {
 						const projectId = this.getNodeParameter('projectId', i) as string;
@@ -255,7 +229,6 @@ export class Reportei implements INodeType {
 					}
 				}
 
-				// Se não tratamos nada, avisa
 				if (!responseData) {
 					responseData = { message: 'No valid operation was performed' };
 				}

@@ -1,10 +1,5 @@
 import { INodeProperties } from 'n8n-workflow';
 
-/**
- * --------------------------------------------------------
- *  Timeline Operations
- * --------------------------------------------------------
- */
 export const timelineOperations: INodeProperties[] = [
 	{
 		displayName: 'Operation',
@@ -18,7 +13,6 @@ export const timelineOperations: INodeProperties[] = [
 				description: 'Add an event (milestone) to the timeline in Reportei',
 				action: 'Add event to timeline',
 			},
-			// Se quiser outras operações futuramente, como "deleteEvent", adicione aqui.
 		],
 		default: 'create',
 		displayOptions: {
@@ -29,13 +23,6 @@ export const timelineOperations: INodeProperties[] = [
 	},
 ];
 
-/**
- * --------------------------------------------------------
- *  Timeline Fields
- * --------------------------------------------------------
- * Estes campos são exibidos quando resource = 'timeline'
- * e operation = 'create'.
- */
 export const timelineFields: INodeProperties[] = [
 	{
 		displayName: 'Project Name or ID',

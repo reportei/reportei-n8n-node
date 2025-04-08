@@ -1,10 +1,5 @@
 import { INodeProperties } from 'n8n-workflow';
 
-/**
- * --------------------------------------------------------
- *  Report Operations
- * --------------------------------------------------------
- */
 export const reportOperations: INodeProperties[] = [
 	{
 		displayName: 'Operation',
@@ -18,7 +13,6 @@ export const reportOperations: INodeProperties[] = [
 				description: 'Creates a new report in Reportei',
 				action: 'Create a report',
 			},
-			// Caso queira adicionar outras operações no futuro, adicione aqui.
 		],
 		default: 'create',
 		displayOptions: {
@@ -29,13 +23,6 @@ export const reportOperations: INodeProperties[] = [
 	},
 ];
 
-/**
- * --------------------------------------------------------
- *  Report Fields
- * --------------------------------------------------------
- * Campos exibidos quando a operação e o resource
- * correspondem a "report" e "create", respectivamente.
- */
 export const reportFields: INodeProperties[] = [
 	{
 		displayName: 'Project Name or ID',

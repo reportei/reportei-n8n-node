@@ -23,7 +23,6 @@ export class ReporteiApi implements ICredentialType {
 		},
 	];
 
-	// Deixe bem claro que o objeto atende ao IAuthenticateGeneric:
 	authenticate: IAuthenticateGeneric = {
 		type: 'generic',
 		properties: {
