@@ -1,46 +1,85 @@
-![Banner image](https://user-images.githubusercontent.com/10284570/173569848-c624317f-42b1-45a6-ab09-f0ea3c247648.png)
+# n8n-nodes-reportei
 
-# n8n-nodes-starter
+This is an n8n community node. It lets you use **Reportei** in your n8n workflows.
 
-This repo contains example nodes to help you get started building your own custom integrations for [n8n](n8n.io). It includes the node linter and other dependencies.
+**Reportei** is a reporting and dashboard platform that helps you generate marketing reports, track timelines, and automate analytics. With this node, you can create reports, dashboards, and timeline events, as well as trigger workflows on various events happening in your Reportei account.
 
-To make your custom node available to the community, you must create it as an npm package, and [submit it to the npm registry](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry).
+[n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/reference/license/) workflow automation platform.
 
-## Prerequisites
+[Installation](#installation)  
+[Operations](#operations)  
+[Credentials](#credentials)  
+[Compatibility](#compatibility)  
+[Usage](#usage)  
+[Resources](#resources)  
+[Version history](#version-history)
 
-You need the following installed on your development machine:
+## Installation
 
-* [git](https://git-scm.com/downloads)
-* Node.js and pnpm. Minimum version Node 18. You can find instructions on how to install both using nvm (Node Version Manager) for Linux, Mac, and WSL [here](https://github.com/nvm-sh/nvm). For Windows users, refer to Microsoft's guide to [Install NodeJS on Windows](https://docs.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows).
-* Install n8n with:
-  ```
-  pnpm install n8n -g
-  ```
-* Recommended: follow n8n's guide to [set up your development environment](https://docs.n8n.io/integrations/creating-nodes/build/node-development-environment/).
+Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes/installation/) in the n8n community nodes documentation.
 
-## Using this starter
+Once installed, you can select **Reportei** and **Reportei Trigger** in your n8n workflows to interact with the Reportei API.
 
-These are the basic steps for working with the starter. For detailed guidance on creating and publishing nodes, refer to the [documentation](https://docs.n8n.io/integrations/creating-nodes/).
+## Operations
 
-1. [Generate a new repository](https://github.com/n8n-io/n8n-nodes-starter/generate) from this template repository.
-2. Clone your new repo:
-   ```
-   git clone https://github.com/<your organization>/<your-repo-name>.git
-   ```
-3. Run `pnpm i` to install dependencies.
-4. Open the project in your editor.
-5. Browse the examples in `/nodes` and `/credentials`. Modify the examples, or replace them with your own nodes.
-6. Update the `package.json` to match your details.
-7. Run `pnpm lint` to check for errors or `pnpm lintfix` to automatically fix errors when possible.
-8. Test your node locally. Refer to [Run your node locally](https://docs.n8n.io/integrations/creating-nodes/test/run-node-locally/) for guidance.
-9. Replace this README with documentation for your node. Use the [README_TEMPLATE](README_TEMPLATE.md) to get started.
-10. Update the LICENSE file to use your details.
-11. [Publish](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry) your package to npm.
+The **Reportei** node offers the following _actions_ (operations):
 
-## More information
+- **Create Report**: Create a marketing report, specifying the project, integrations, date ranges, and titles.  
+- **Create Dashboard**: Create a custom dashboard linked to a project, with selected integrations and date ranges.  
+- **Add Event to Timeline**: Insert a milestone or note into a project’s report timeline.
 
-Refer to our [documentation on creating nodes](https://docs.n8n.io/integrations/creating-nodes/) for detailed information on building your own nodes.
+The **Reportei Trigger** node supports these _events_ (webhooks):
 
-## License
+- **Report Created**  
+- **Dashboard Created**  
+- **Automation Executed**  
+- **Control Goal Met**  
+- **Control Goal Not Met**  
+- **Timeline Milestone Added**
 
-[MIT](https://github.com/n8n-io/n8n-nodes-starter/blob/master/LICENSE.md)
+## Credentials
+
+To use this node, you need a **Reportei API** token (Bearer token).  
+1. **Get your token** from the Reportei account page.  
+2. In n8n, create a new credential called **Reportei API** and paste your token.  
+3. Use this credential in the **Reportei** or **Reportei Trigger** node.
+
+For webhooks, the node will automatically register or unregister a webhook subscription in your Reportei account if you use the **Reportei Trigger** node. You only need to provide valid credentials and set the correct event type.
+
+## Compatibility
+
+- **Minimum n8n version**: 1.85.0 (or whichever you have tested).  
+- The node is developed and tested against **Reportei**’s [API v1](https://app.reportei.com/docs/api).  
+- No known incompatibilities, but you must enable **community nodes** in n8n’s settings for installation.
+
+## Usage
+
+1. In your n8n instance, install the node via one of the methods described in the community nodes [installation guide](https://docs.n8n.io/integrations/community-nodes/installation/).  
+2. Create or select a credential for **Reportei API**.  
+3. **Actions** node (Reportei):
+   - Drag the **Reportei** node into your workflow.  
+   - Select your resource (Report, Dashboard, or Timeline) and the operation (create).  
+   - Fill the required fields, such as “Project ID”, “Integrations”, “Title”, etc.  
+   - Execute the workflow to see the results.
+4. **Trigger** node (Reportei Trigger):
+   - Drag the **Reportei Trigger** node into your workflow.  
+   - Choose an event type (e.g., “report_created”).  
+   - Activate the workflow. The node will register a webhook at Reportei.  
+   - Once the event occurs, n8n will receive a POST request and trigger your workflow.
+
+If you need more help with n8n basics, check out the [Try it out](https://docs.n8n.io/try-it-out/) documentation.
+
+## Resources
+
+* [n8n community nodes documentation](https://docs.n8n.io/integrations/community-nodes/)  
+* [Reportei API documentation](https://app.reportei.com/docs/api)  
+* [n8n official docs](https://docs.n8n.io/)
+
+## Version history
+
+**0.1.0**  
+- Initial release of the **n8n-nodes-reportei** package.  
+- Added actions: Create Report, Create Dashboard, Add Timeline Event.  
+- Added triggers for 6 events: report_created, dashboard_created, automation_executed, control_goal_met, control_goal_not_met, and timeline_milestone.
+
+---
