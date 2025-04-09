@@ -1,5 +1,5 @@
 {
-  "name": "n8n-nodes-reportei",
+  "name": "@reportei/n8n-nodes-reportei",
   "version": "0.1.0",
   "description": "n8n nodes for integrating with Reportei",
   "keywords": [
