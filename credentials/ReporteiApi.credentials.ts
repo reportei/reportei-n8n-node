@@ -18,7 +18,7 @@ export class ReporteiApi implements ICredentialType {
 				password: true,
 			},
 			default: '',
-			description: 'Enter your Reportei Bearer token here',
+			description: 'Enter your Reportei API token here',
 			required: true,
 		},
 	];

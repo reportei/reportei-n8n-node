@@ -67,29 +67,18 @@ export class ReporteiTrigger implements INodeType {
 		],
 	};
 
-	/**
-	 * Precisamos mover `checkExists`, `create`, `delete` para dentro de webhookMethods.default
-	 */
 	webhookMethods = {
 		default: {
-			/**
-			 * Não podemos listar para checar duplicação => sempre retorna false
-			 */
 			async checkExists(this: IHookFunctions): Promise<boolean> {
 				return false;
 			},
-			/**
-			 * Cria a subscrição quando o fluxo é ativado
-			 * Precisamos enviar: client_id, source= 'n8n', url e event_type
-			 */
+		
 			async create(this: IHookFunctions): Promise<boolean> {
 				const clientId = this.getNodeParameter('clientId') as number;
 				const event = this.getNodeParameter('event') as string;
 
-				// Gera a URL pública do webhook do n8n
 				const webhookUrl = this.getNodeWebhookUrl('default');
 
-				// Monta o body conforme doc do Reportei
 				const body = {
 					client_id: clientId,
 					source: 'n8n',
@@ -114,9 +103,7 @@ export class ReporteiTrigger implements INodeType {
 
 				return true;
 			},
-			/**
-			 * Remove a subscrição quando o fluxo é desativado.
-			 */
+
 			async delete(this: IHookFunctions): Promise<boolean> {
 				const clientId = this.getNodeParameter('clientId') as number;
 				const event = this.getNodeParameter('event') as string;
@@ -146,9 +133,6 @@ export class ReporteiTrigger implements INodeType {
 		},
 	};
 
-	/**
-	 * Adicionamos a função getClients para carregar dinamicamente
-	 */
 	methods = {
 		loadOptions: {
 			async getClients(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
@@ -174,16 +158,10 @@ export class ReporteiTrigger implements INodeType {
 		},
 	};
 
-	/**
-	 * Agora o método webhook deve retornar `IWebhookResponseData`.
-	 * E ao invés de this.getBody(), usamos `this.getRequestObject().body`.
-	 */
 	async webhook(this: IWebhookFunctions): Promise<IWebhookResponseData> {
-		// Captura o corpo da requisição POST que chegou
 		const req = this.getRequestObject();
 		const bodyData = req.body as IDataObject;
 
-		// Retornamos um objeto IWebhookResponseData
 		return {
 			workflowData: [
 				[
