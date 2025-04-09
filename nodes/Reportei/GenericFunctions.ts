@@ -12,7 +12,7 @@ export async function reporteiApiRequest(
 	const baseUrl = 'https://app.reportei.com/api/v1';
 
 	const options: IHttpRequestOptions = {
-		method: method as IHttpRequestMethods, // << aqui o cast
+		method: method as IHttpRequestMethods,
 		body,
 		qs,
 		url: `${baseUrl}${endpoint}`,
