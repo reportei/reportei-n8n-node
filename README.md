@@ -24,8 +24,8 @@ Once installed, you can select **Reportei** and **Reportei Trigger** in your n8n
 
 The **Reportei** node offers the following _actions_ (operations):
 
-- **Create Report**: Create a marketing report, specifying the project, integrations, date ranges, and titles.  
-- **Create Dashboard**: Create a custom dashboard linked to a project, with selected integrations and date ranges.  
+- **Create Report**: Create a marketing report, specifying the project, integrations, date ranges, titles, and optionally select a template.  
+- **Create Dashboard**: Create a custom dashboard linked to a project, with selected integrations, date ranges, and optionally select a template.  
 - **Add Event to Timeline**: Insert a milestone or note into a project’s report timeline.
 
 The **Reportei Trigger** node supports these _events_ (webhooks):
@@ -89,3 +89,9 @@ If you need more help with n8n basics, check out the [Try it out](https://docs.n
 - **0.1.2**  
   - Added the optional **Custom Webhook Base URL** input in the trigger node.  
   - Users can now specify a public domain (such as a tunnel URL) to replace localhost, making it easier to receive events behind NAT or local environments.
+
+- **0.1.3**  
+  - **NEW**: Added optional **Template Selection** for Reports and Dashboards.  
+  - Templates are now loaded dynamically based on the selected project.  
+  - Enhanced API endpoint handling with multiple fallback URLs for better reliability.  
+  - Improved error handling for template loading operations.
