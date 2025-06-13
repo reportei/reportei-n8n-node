@@ -73,6 +73,7 @@ export const reportFields: INodeProperties[] = [
 		},
 		typeOptions: {
 			loadOptionsMethod: 'getTemplates',
+			loadOptionsDependsOn: ['projectId'],
 		},
 	},
 

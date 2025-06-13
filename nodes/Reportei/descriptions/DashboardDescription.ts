@@ -72,6 +72,7 @@ export const dashboardFields: INodeProperties[] = [
 		},
 		typeOptions: {
 			loadOptionsMethod: 'getTemplates',
+			loadOptionsDependsOn: ['projectId'],
 		},
 	},
 	{

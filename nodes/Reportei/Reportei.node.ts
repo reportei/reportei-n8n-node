@@ -134,22 +134,73 @@ export class Reportei implements INodeType {
 			async getTemplates(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
 				const returnData: INodePropertyOptions[] = [];
 
-				const response = await this.helpers.httpRequestWithAuthentication.call(
-					this,
-					'reporteiApi',
-					{
-						method: 'GET',
-						url: 'https://app.reportei.com/api/v1/templates',
-						json: true,
-					},
-				);
+				try {
+					const clientId = this.getCurrentNodeParameter('projectId') as string;
+					
+					const urls: string[] = [
+						'https://app.reportei.com/api/v1/templates',
+						'https://app.reportei.com/api/v1/template',
+						'https://app.reportei.com/api/v1/report-templates'
+					];
+					
+					if (clientId) {
+						urls.unshift(`https://app.reportei.com/api/v1/clients/${clientId}/templates`);
+					}
+					
+					let response = null;
+					
+					for (const url of urls) {
+						try {
+							response = await this.helpers.httpRequestWithAuthentication.call(
+								this,
+								'reporteiApi',
+								{
+									method: 'GET',
+									url: url,
+									json: true,
+								},
+							);
+							break;
+						} catch (urlError) {
+							continue;
+						}
+					}
+					
+					if (!response) {
+						throw new Error('Unable to load templates');
+					}
 
-				for (const template of response.data) {
+					let templates;
+					if (response.data) {
+						templates = response.data;
+					} else if (Array.isArray(response)) {
+						templates = response;
+					} else if (response.templates) {
+						templates = response.templates;
+					} else {
+						templates = [];
+					}
+					
+					if (Array.isArray(templates) && templates.length > 0) {
+						for (const template of templates) {
+							returnData.push({
+								name: template.name || template.title || template.label || `Template ${template.id}`,
+								value: template.id || template.value,
+							});
+						}
+					} else {
+						returnData.push({
+							name: 'No templates available',
+							value: '',
+						});
+					}
+				} catch (error) {
 					returnData.push({
-						name: template.name,
-						value: template.id,
+						name: '',
+						value: '',
 					});
 				}
+
 				return returnData;
 			},
 		},
