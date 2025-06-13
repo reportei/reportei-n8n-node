@@ -60,6 +60,23 @@ export const reportFields: INodeProperties[] = [
 	},
 
 	{
+		displayName: 'Template Name or ID',
+		name: 'templateId',
+		type: 'options',
+		default: '',
+		description: 'Choose a template for your report (optional). Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>.',
+		displayOptions: {
+			show: {
+				resource: ['report'],
+				operation: ['create'],
+			},
+		},
+		typeOptions: {
+			loadOptionsMethod: 'getTemplates',
+		},
+	},
+
+	{
 		displayName: 'Title',
 		name: 'reportTitle',
 		type: 'string',

@@ -130,6 +130,28 @@ export class Reportei implements INodeType {
 				}
 				return returnData;
 			},
+
+			async getTemplates(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+				const returnData: INodePropertyOptions[] = [];
+
+				const response = await this.helpers.httpRequestWithAuthentication.call(
+					this,
+					'reporteiApi',
+					{
+						method: 'GET',
+						url: 'https://app.reportei.com/api/v1/templates',
+						json: true,
+					},
+				);
+
+				for (const template of response.data) {
+					returnData.push({
+						name: template.name,
+						value: template.id,
+					});
+				}
+				return returnData;
+			},
 		},
 	};
 
@@ -154,6 +176,7 @@ export class Reportei implements INodeType {
 						const comparisonEndDate = this.getNodeParameter('comparisonEndDate', i) as string;
 						const reportTitle = this.getNodeParameter('reportTitle', i) as string;
 						const reportSubtitle = this.getNodeParameter('reportSubtitle', i) as string;
+						const templateId = this.getNodeParameter('templateId', i, '') as string;
 
 						const body: IDataObject = {
 							client_id: projectId,
@@ -165,6 +188,10 @@ export class Reportei implements INodeType {
 							title: reportTitle,
 							subtitle: reportSubtitle,
 						};
+
+						if (templateId) {
+							body.template_id = templateId;
+						}
 
 						responseData = await reporteiApiRequest.call(
 							this,
@@ -185,6 +212,7 @@ export class Reportei implements INodeType {
 						const comparisonEndDate = this.getNodeParameter('comparisonEndDate', i) as string;
 						const reportTitle = this.getNodeParameter('reportTitle', i) as string;
 						const reportSubtitle = this.getNodeParameter('reportSubtitle', i) as string;
+						const templateId = this.getNodeParameter('templateId', i, '') as string;
 
 						const body: IDataObject = {
 							client_id: projectId,
@@ -196,6 +224,10 @@ export class Reportei implements INodeType {
 							title: reportTitle,
 							subtitle: reportSubtitle,
 						};
+
+						if (templateId) {
+							body.template_id = templateId;
+						}
 
 						responseData = await reporteiApiRequest.call(
 							this,
