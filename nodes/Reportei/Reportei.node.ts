@@ -6,6 +6,7 @@ import {
 	ILoadOptionsFunctions,
 	INodePropertyOptions,
 	IDataObject,
+	NodeApiError,
 } from 'n8n-workflow';
 
 import { reportOperations, reportFields } from './descriptions/ReportDescription';
@@ -167,7 +168,7 @@ export class Reportei implements INodeType {
 					}
 					
 					if (!response) {
-						throw new Error('Unable to load templates');
+						throw new NodeApiError(this.getNode(), { message: 'Unable to load templates' });
 					}
 
 					let templates;
