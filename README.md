@@ -95,3 +95,9 @@ If you need more help with n8n basics, check out the [Try it out](https://docs.n
   - Templates are now loaded dynamically based on the selected project.  
   - Enhanced API endpoint handling with multiple fallback URLs for better reliability.  
   - Improved error handling for template loading operations.
+
+- **0.1.4**  
+  - **FIXED**: Added credential test functionality to validate API tokens.  
+  - The node now includes automatic credential validation using the `/me` endpoint.  
+  - This resolves the "Missing credential test" error during n8n community node verification.  
+  - Improved user experience with immediate feedback on invalid credentials.

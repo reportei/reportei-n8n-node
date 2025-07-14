@@ -1,5 +1,6 @@
 import {
 	IAuthenticateGeneric,
+	ICredentialTestRequest,
 	ICredentialType,
 	INodeProperties,
 } from 'n8n-workflow';
@@ -30,6 +31,14 @@ export class ReporteiApi implements ICredentialType {
                 ContentType: 'application/json',
 				Authorization: '=Bearer {{$credentials.apiToken}}',
 			},
+		},
+	};
+
+	test: ICredentialTestRequest = {
+		request: {
+			baseURL: 'https://app.reportei.com/api/v1',
+			url: '/me',
+			method: 'GET',
 		},
 	};
 }
