@@ -34,8 +34,7 @@ export class ReporteiTrigger implements INodeType {
 				displayName: 'Project Name or ID',
 				name: 'clientId',
 				type: 'options',
-				default: '',
-				required: true,
+													default: '',
 				description: 'Select the project to which you want to add the trigger. Choose from the list, or specify an ID using an expression. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>.',
 				typeOptions: {
 					loadOptionsMethod: 'getClients',
@@ -51,7 +50,8 @@ export class ReporteiTrigger implements INodeType {
 					{ name: 'Control Goal Not Met', value: 'control_goal_not_met' },
 					{ name: 'Dashboard Created', value: 'dashboard_created' },
 					{ name: 'Report Created', value: 'report_created' },
-					{ name: 'Timeline Milestone Added', value: 'timeline_milestone_added' },
+					{ name: 'Report Viewed', value: 'report_viewed' },
+					{ name: 'Timeline Milestone Added', value: 'timeline_milestone_added' }
 				],
 				default: 'report_created',
 				required: true,
@@ -82,21 +82,24 @@ export class ReporteiTrigger implements INodeType {
 				return false;
 			},
 			async create(this: IHookFunctions): Promise<boolean> {
-				const clientId = this.getNodeParameter('clientId') as number;
+				const clientId = this.getNodeParameter('clientId', 0) as string | number | '';
 				const event = this.getNodeParameter('event') as string;
 				let webhookUrl = this.getNodeWebhookUrl('default') as string;
-			
+				
 				const customBase = this.getNodeParameter('customWebhookBaseUrl', 0) as string || '';
 				if (customBase) {
 					webhookUrl = replaceBaseUrl(webhookUrl, customBase);
 				}
-			
-				const body = {
-					client_id: clientId,
+				
+				const body: IDataObject = {
 					source: 'n8n',
 					url: webhookUrl,
 					event_type: event,
 				};
+				
+				if (clientId) {
+					(body as IDataObject).client_id = clientId;
+				}
 			
 				const response = await this.helpers.httpRequestWithAuthentication.call(
 					this,
@@ -115,21 +118,24 @@ export class ReporteiTrigger implements INodeType {
 				return true;
 			},
 			async delete(this: IHookFunctions): Promise<boolean> {
-				const clientId = this.getNodeParameter('clientId') as number;
+				const clientId = this.getNodeParameter('clientId', 0) as string | number | '';
 				const event = this.getNodeParameter('event') as string;
 				let webhookUrl = this.getNodeWebhookUrl('default') as string;
-
+				
 				const customBase = this.getNodeParameter('customWebhookBaseUrl', 0) as string || '';
 				if (customBase) {
 					webhookUrl = replaceBaseUrl(webhookUrl, customBase);
 				}
-
-				const body = {
-					client_id: clientId,
+				
+				const body: IDataObject = {
 					source: 'n8n',
 					event_type: event,
 					url: webhookUrl,
 				};
+				
+				if (clientId) {
+					(body as IDataObject).client_id = clientId;
+				}
 
 				await this.helpers.httpRequestWithAuthentication.call(
 					this,

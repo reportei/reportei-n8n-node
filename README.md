@@ -31,6 +31,7 @@ The **Reportei** node offers the following _actions_ (operations):
 The **Reportei Trigger** node supports these _events_ (webhooks):
 
 - **Report Created**  
+- **Report Viewed**  
 - **Dashboard Created**  
 - **Automation Executed**  
 - **Control Goal Met**  
@@ -101,3 +102,7 @@ If you need more help with n8n basics, check out the [Try it out](https://docs.n
   - The node now includes automatic credential validation using the `/me` endpoint.  
   - This resolves the "Missing credential test" error during n8n community node verification.  
   - Improved user experience with immediate feedback on invalid credentials.
+
+- **0.1.5**  
+  - **NEW**: Added 'Report Viewed' trigger event (`report_viewed`).  
+  - **IMPROVED**: Made 'Project Name or ID' field optional in trigger configuration. Users can now create triggers without specifying a specific project, allowing for more flexible webhook configurations.  
